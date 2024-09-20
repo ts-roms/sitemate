@@ -77,19 +77,19 @@ export const Tracker = ({ title }: Props) => {
             ></textarea>
           </div>
           {!isEditMode ? (
-            <button onClick={handleCreateIssue}>Submit</button>
+            <button onClick={handleCreateIssue} className='rounded border p-2 px-6'>Submit</button>
           ) : (
             <div className="flex gap-5 justify-between">
-              <button onClick={handleCancel}>Cancel</button>
-              <button onClick={() => handleUpdateIssue(values)}>Update</button>
+              <button onClick={handleCancel} className='rounded border p-2 px-6'>Cancel</button>
+              <button onClick={() => handleUpdateIssue(values)} className='rounded border p-2 px-6'>Update</button>
             </div>
           )}
         </form>
 
         <ul className="border mt-4 shadow-md">
           {issues.length > 0 ? issues.map((issue: Issue) => (
-            <li key={issue._id} className="py-2 mx-10 cursor-pointer list-disc flex justify-between">
-              <div onClick={() => handleGetIssue(issue)} className='block cursor-pointer'>
+            <li key={issue._id} className="py-2 mx-10 cursor-pointer list-disc flex justify-between border-b-2 last:border-b-none">
+              <div onClick={() => handleGetIssue(issue)} className='block cursor-pointer w-full'>
                 <label className='text-lg font-bold'>{issue.title}</label>
                 <div>
                   <span className='text-sm'>{issue.description}</span>
