@@ -1,75 +1,24 @@
-import { useMutation, useQuery } from "react-query";
 import { Issue } from "../model/issue-model"
+import axios from "axios";
 
-
-export const useCreateIssue = (payload: Issue) => {
-
-  const url = 'http://localhost:3333/api/issue-tracker';
-  return useMutation({
-    mutationKey: 'create-issue',
-    mutationFn: async () => {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      })
-      const result = await response.json()
-      return result.data;
-    }
-  })
-
+export const useCreateIssue = async (payload: Issue) => {
+  const url = 'http://localhost:5000/api/issue-tracker';
+  return await axios.post<Issue>(url, payload);
 }
 
-export const useReadIssue = (id: number) => {
-  const url = `http://localhost:3333/api/issue-tracker/${id}`;
-  return useQuery({
-    queryKey: 'get-issue',
-    queryFn: async () => {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      const result = await response.json()
-      return result.data;
-    }
-  })
+export const useGetIssues = async () => {
+  const url = `http://localhost:5000/api/issue-tracker`;
+   const data =  await axios.get<Issue[]>(url).then((response) => response.data);
+   return data;
 }
 
-export const useUpdateIssue = (id: number, payload: Issue) => {
-  const url = `http://localhost:3333/api/issue-tracker/${id}`;
-  return useMutation({
-    mutationKey: 'update-issue',
-    mutationFn: async () => {
-      const response = await fetch(url, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      })
-      const result = await response.json()
-      return result.data;
-    }
-  })
+export const useUpdateIssue = async (id: string | undefined, payload: Issue) => {
+  const url = `http://localhost:5000/api/issue-tracker/${id}`;
+  return await axios.put(url, payload).then((response) => response.data);
 }
 
-export const useDeleteIssue = (id: number) => {
-  const url = `http://localhost:3333/api/issue-tracker/${id}`;
-  return useMutation({
-    mutationKey: 'delete-issue',
-    mutationFn: async () => {
-      const response = await fetch(url, {
-        method: 'DELTE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      const result = await response.json()
-      return result.data;
-    }
-  })
+export const useDeleteIssue = async (id: string | undefined) => {
+  const url = `http://localhost:5000/api/issue-tracker/${id}`;
+  return await axios.delete(url)
+
 }
