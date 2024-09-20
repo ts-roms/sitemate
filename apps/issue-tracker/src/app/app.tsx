@@ -1,9 +1,9 @@
-import NxWelcome from './nx-welcome';
+import { Tracker } from "./tracker";
 
 export function App() {
   return (
     <div>
-      <NxWelcome title="issue-tracker" />
+      <Tracker title="Issue Tracker" />
     </div>
   );
 }
